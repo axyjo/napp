@@ -20,7 +20,8 @@ require.config({
     'bootstrap-scrollspy': '../../bower_components/sass-bootstrap/js/scrollspy',
     'bootstrap-tab': '../../bower_components/sass-bootstrap/js/tab',
     'bootstrap-tooltip': '../../bower_components/sass-bootstrap/js/tooltip',
-    'bootstrap-transition': '../../bower_components/sass-bootstrap/js/transition'
+    'bootstrap-transition': '../../bower_components/sass-bootstrap/js/transition',
+    'leaflet': '../../bower_components/leaflet-dist/leaflet-src'
   },
   shim: {
     handlebars: {

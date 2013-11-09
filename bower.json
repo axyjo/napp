@@ -15,7 +15,8 @@
     "handlebars": "~1.0.0",
     "normalize-css": "~2.1.2",
     "respond": "~1.2.0",
-    "sass-bootstrap": "~3.0.2"
+    "sass-bootstrap": "~3.0.2",
+    "leaflet-dist": "~0.6.4"
   },
   "devDependencies": {}
 }
