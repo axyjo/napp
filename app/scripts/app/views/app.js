@@ -32,7 +32,6 @@ function (Backbone, template, NavBoxView, PopupView, AddSpotView, LocationSnapVi
       this.listenTo(this.model, 'change:latlng', this.onLocationFound);
       this.listenTo(this.collection, 'add', this.addSpot);
       this.listenTo(this.collection, 'remove', this.removeSpot);
-      //this.listenTo(this.app.collections.people, 'reset', this.populateView);
     },
 
     render: function render () {

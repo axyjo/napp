@@ -26,9 +26,9 @@ function (Backbone, $, template, Nap, L, _) {
 
     render: function render(options) {
       options = options || {};
-      var self = this;
+      var self = this, old;
       if (this.marker) {
-        this.map.removeLayer(this.marker);
+        old = this.marker;
       }
 
       _.extend(this.model.attributes, {
@@ -55,6 +55,9 @@ function (Backbone, $, template, Nap, L, _) {
         }
       });
 
+      if (old) {
+        this.map.removeLayer(old);
+      }
       this.marker.addTo(this.map).bindPopup($tplContent[0]);
 
       return this;

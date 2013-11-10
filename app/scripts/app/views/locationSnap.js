@@ -21,10 +21,9 @@ function (Backbone, $, L, _) {
     },
 
     addListeners: function addListeners () {
-      this.timer = setInterval(_.bind(this.locate, this), 3000);
+      this.locate(true);
       this.map.on('locationfound', _.bind(this.onLocate, this));
       this.map.on('mousedown', _.bind(this.suspendRefresh, this));
-      this.locate();
     },
 
     createControl: function() {
@@ -70,8 +69,8 @@ function (Backbone, $, L, _) {
       return this;
     },
 
-    locate: function() {
-      this.map.locate({setView: this.refresh});
+    locate: function(force) {
+      this.map.locate({setView: (this.refresh && !L.Browser.touch) || force});
     },
 
     onLocate: function(e) {
