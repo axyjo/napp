@@ -184,6 +184,8 @@ app.post('/api/spots', app.api.spots.create);
 app.put('/api/spots/:id', app.api.spots.update);
 app['delete']('/api/spots/:id', app.api.spots['delete']);
 
+app.get('/api/geocode', app.api.geocode.geocode);
+
 /*
  * Status Code pages
  */
