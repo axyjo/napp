@@ -5,9 +5,10 @@ define([
   'core/eventHandlers',
   'collections/people',
   'underscore',
+  'leaflet'
 ],
 
-function (Backbone, AppView, appConfig, appEventHandlers, PeopleCollection, _) {
+function (Backbone, AppView, appConfig, appEventHandlers, PeopleCollection, _, L) {
   'use strict';
 
   var App = function() {
@@ -56,4 +57,3 @@ function (Backbone, AppView, appConfig, appEventHandlers, PeopleCollection, _) {
 
   return App;
 });
-
