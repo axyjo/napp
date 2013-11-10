@@ -9,7 +9,8 @@ function (Backbone, $, modalTpl, L) {
   'use strict';
 
   var NavBoxView = Backbone.View.extend({
-    className: 'navbar navbar-default',
+    className: 'btn btn-primary btn-lg',
+    tagName: 'button',
 
     events: {
       'click': 'handleClick',
@@ -39,7 +40,7 @@ function (Backbone, $, modalTpl, L) {
               title: 'Sign in',
               body: 'foobar'
             })
-            self.$el.append('<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Sign In</button>' );
+            self.$el.text('Sign In');
             $('body').append(modal);
 
             return container;
@@ -55,9 +56,10 @@ function (Backbone, $, modalTpl, L) {
 
     handleClick: function handleClick (evt) {
       var self = this;
+      console.log(evt);
       require(['bootstrap-modal'], function() {
         self.$('#myModal').modal();
-      });    
+      });
     },
   });
 

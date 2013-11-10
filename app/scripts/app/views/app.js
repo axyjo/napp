@@ -4,13 +4,14 @@ define([
   'views/searchbox',
   'views/navigation',
   'views/popup',
+  'views/locationSnap',
   'models/currentLocation',
   'jquery',
   'leaflet',
   'underscore'
 ],
 
-function (Backbone, template, SearchBoxView, NavBoxView, PopupView, CurrentLocation, $, L, _) {
+function (Backbone, template, SearchBoxView, NavBoxView, PopupView, LocationSnapView, CurrentLocation, $, L, _) {
   'use strict';
 
   var AppView = Backbone.View.extend({
@@ -25,27 +26,22 @@ function (Backbone, template, SearchBoxView, NavBoxView, PopupView, CurrentLocat
     },
 
     addListeners: function addListeners () {
+      this.listenTo(this.model, 'change:latlng', this.onLocationFound);
       //this.listenTo(this.app.collections.people, 'reset', this.populateView);
     },
 
-
-
     render: function render () {
-      this.model.once('change:latlng', function() {
-        this.map.setView(this.model.get('latlng'), 18);
-      }, this);
       this.map = L.map('map');
       L.tileLayer('http://{s}.tile.cloudmade.com/8ee2a50541944fb9bcedded5165f09d9/997/256/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
         maxZoom: 18
       }).addTo(this.map);
-      this.map.on('locationfound', _.bind(this.onLocationFound, this));
 
-      this.map.locate({setView: true, maxZoom: 15});
-      setInterval(_.bind(function() {
-        console.log('firing');
-        this.map.locate({setView: true, maxZoom: 15});
-      }, this), 3000);
+
+      this.locationSnap = new LocationSnapView({
+        map: this.map,
+        model: this.model
+      });
 
       var sbView = new SearchBoxView();
       sbView.render(this.map);
@@ -68,10 +64,11 @@ function (Backbone, template, SearchBoxView, NavBoxView, PopupView, CurrentLocat
       this.$el.html( this.template(data) );
     },
 
-    onLocationFound: function onLocationFound(e) {
+    onLocationFound: function onLocationFound() {
+      var e = this.model.get('last_locate_event');
       if (this.map) {
         var radius = Math.round(e.accuracy * 100 / 2)/100;
-        this.model.set('latlng', e.latlng);
+
 
         if (this.marker && this.markerCircle) {
           this.marker.setLatLng(e.latlng);
