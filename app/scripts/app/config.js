@@ -21,6 +21,7 @@ require.config({
     'bootstrap-tab': '../../bower_components/sass-bootstrap/js/tab',
     'bootstrap-tooltip': '../../bower_components/sass-bootstrap/js/tooltip',
     'bootstrap-transition': '../../bower_components/sass-bootstrap/js/transition',
+    'bootstrap-fileinput': '../vendor/bootstrap.fileinput',
     'leaflet': '../../bower_components/leaflet-dist/leaflet-src'
   },
   shim: {

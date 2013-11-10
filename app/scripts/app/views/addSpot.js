@@ -4,7 +4,8 @@ define([
   'leaflet',
   'underscore',
   'JST/spotConfirm',
-  'models/spot'
+  'models/spot',
+  'bootstrap-fileinput'
 ],
 
 function (Backbone, $, L, _, template, Spot) {
@@ -75,6 +76,8 @@ function (Backbone, $, L, _, template, Spot) {
           var latlng = self.marker.getLatLng().wrap();
           var model = new Spot({
             name: $el.parents('.spotConfirm').find('input[name=name]').val(),
+            description: $el.parents('.spotConfirm').find('input[name=description]').val(),
+            image: $el.parents('.spotConfirm').find('input[name=image]').val(),
             location: [latlng.lng, latlng.lat]
           });
           model.save(null, {
@@ -86,6 +89,8 @@ function (Backbone, $, L, _, template, Spot) {
           });
         }
       });
+      $popupContents.find('.fileinput').fileinput();
+
       this.marker.on('dragend', function() {
         this.popup = this.bindPopup($popupContents[0]).openPopup();
       });

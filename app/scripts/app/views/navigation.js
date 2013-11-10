@@ -56,9 +56,8 @@ function (Backbone, $, modalTpl, L) {
 
     handleClick: function handleClick (evt) {
       var self = this;
-      console.log(evt);
       require(['bootstrap-modal'], function() {
-        self.$('#myModal').modal();
+        $('#myModal').modal();
       });
     },
   });
