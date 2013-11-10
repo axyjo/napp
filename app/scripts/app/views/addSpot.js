@@ -86,6 +86,10 @@ function (Backbone, $, L, _, template, Spot) {
       this.marker.on('dragend', function() {
         this.popup = this.bindPopup($popupContents[0]).openPopup();
       });
+
+      this.marker.on('popupclose', function() {
+        self.map.removeLayer(self.marker);
+      });
     },
 
     render: function render(options) {
