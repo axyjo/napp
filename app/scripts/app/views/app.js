@@ -1,7 +1,7 @@
 define([
   'backbone',
   'JST/app',
-  'views/navigation',
+  'views/iframe',
   'views/popup',
   'views/addSpot',
   'views/locationSnap',
@@ -12,7 +12,7 @@ define([
   'underscore'
 ],
 
-function (Backbone, template, NavBoxView, PopupView, AddSpotView, LocationSnapView, CurrentLocation, SpotsCollection, $, L, _) {
+function (Backbone, template, IframeView, PopupView, AddSpotView, LocationSnapView, CurrentLocation, SpotsCollection, $, L, _) {
   'use strict';
 
   var AppView = Backbone.View.extend({
@@ -47,8 +47,10 @@ function (Backbone, template, NavBoxView, PopupView, AddSpotView, LocationSnapVi
         model: this.model
       });
 
-      var navView = new NavBoxView();
-      navView.render(this.map);
+      var ifView = new IframeView({
+        map: this.map
+      });
+      ifView.render();
 
       new AddSpotView({
         map: this.map,
