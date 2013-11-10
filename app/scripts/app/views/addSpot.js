@@ -54,26 +54,26 @@ function (Backbone, $, L, _, template, Spot) {
     },
 
     saveImage: function(model, collection, image) {
-      var data = new FormData(),
-      url = '/api/spots/' + model.id + '/asset';
+      if (image && image.name && model) {
+        var data = new FormData(),
+        url = '/api/spots/' + model.id + '/asset';
 
-      data.append('image', image);
-      $.ajax({
-        url: url,
-        type: 'POST',
-        data: data,
-        processData: false,
-        contentType: false,
-        success: function(resp) {
-          var assets = model.get('assets');
-          assets.push(resp._id);
-          model.set('assets', assets);
-          collection.remove(model);
-          collection.add(model);
-        }
-      });
-
-
+        data.append('image', image);
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: data,
+          processData: false,
+          contentType: false,
+          success: function(resp) {
+            var assets = model.get('assets');
+            assets.push(resp._id);
+            model.set('assets', assets);
+            collection.remove(model);
+            collection.add(model);
+          }
+        });
+      }
     },
 
     clickHandler: function() {
