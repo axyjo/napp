@@ -59,7 +59,6 @@ function (Backbone, template, SearchBoxView, NavBoxView, $, L, _) {
 
     onLocationFound: function onLocationFound(e) {
       if (this.map) {
-        console.log(e);
         var radius = Math.round(e.accuracy * 100 / 2)/100;
 
         L.marker(e.latlng).addTo(this.map)
