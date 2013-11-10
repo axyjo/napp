@@ -2,10 +2,11 @@ define([
   'backbone',
   'jquery',
   'JST/popup',
-  'leaflet'
+  'leaflet',
+  'underscore'
 ],
 
-function (Backbone, $, template, L) {
+function (Backbone, $, template, L, _) {
   'use strict';
 
   var PopupView = Backbone.View.extend({
@@ -28,7 +29,10 @@ function (Backbone, $, template, L) {
         this.map.removeLayer(this.marker);
       }
 
-      _.extend(this.model.attributes, {distance: this._calculateDistance()});
+      _.extend(this.model.attributes, {
+        distance: this._calculateDistance(),
+        assetUrl: '/api/spots/' + this.model.id + '/asset/' + this.model.get('assets')[0]
+      });
       this.marker = L.marker(this.point).addTo(this.map)
           .bindPopup(template(this.model.attributes));
 

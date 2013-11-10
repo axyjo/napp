@@ -1,6 +1,9 @@
-<h3>{{name}}</h3>
-<img src="http://placehold.it/275x150" />
-<br><br>
-<div> <b>Description</b>: {{description}}</div>
-<div> <b>Rating</b>: {{rating}}</div>
-<div>You are within  <b>{{distance}}</b> kilometres from this point </div>
+<div class="spot-popup">
+    <h3>{{name}}</h3>
+    {{#if assets.length}}
+    <img src="{{assetUrl}}" />
+    {{/if}}
+    <div> <b>Description</b>: {{description}}</div>
+    <div> <b>Rating</b>: {{rating}}</div>
+    <div>You are within  <b>{{distance}}</b> kilometres from this point </div>
+</div>

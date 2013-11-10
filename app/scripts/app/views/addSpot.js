@@ -53,6 +53,29 @@ function (Backbone, $, L, _, template, Spot) {
       this.control.addTo(this.map);
     },
 
+    saveImage: function(model, collection, image) {
+      var data = new FormData(),
+      url = '/api/spots/' + model.id + '/asset';
+
+      data.append('image', image);
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: data,
+        processData: false,
+        contentType: false,
+        success: function(resp) {
+          var assets = model.get('assets');
+          assets.push(resp._id);
+          model.set('assets', assets);
+          collection.remove(model);
+          collection.add(model);
+        }
+      });
+
+
+    },
+
     clickHandler: function() {
       if (this.marker) {
         this.map.removeLayer(this.marker);
@@ -74,14 +97,15 @@ function (Backbone, $, L, _, template, Spot) {
         if ($el.hasClass('btn-default')) {
           e.preventDefault();
           var latlng = self.marker.getLatLng().wrap();
+          var image = $el.parents('.spotConfirm').find('input[name=image]').get(0).files[0];
           var model = new Spot({
             name: $el.parents('.spotConfirm').find('input[name=name]').val(),
             description: $el.parents('.spotConfirm').find('input[name=description]').val(),
-            image: $el.parents('.spotConfirm').find('input[name=image]').val(),
             location: [latlng.lng, latlng.lat]
           });
           model.save(null, {
             success: function() {
+              self.saveImage(model, self.parent.collection, image);
               self.parent.collection.add(model);
               self.marker.off('popupclose');
               self.map.removeLayer(self.marker);

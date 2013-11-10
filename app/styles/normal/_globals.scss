@@ -49,3 +49,11 @@ html, body, #map {
 .spotConfirm .form {
     display: none;
 }
+
+
+.spot-popup {
+    img {
+        max-width: 250px !important;
+        max-height: 200px !important;
+    }
+}

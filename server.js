@@ -173,7 +173,6 @@ app.get('/normal', function(req, res, next) {
 app.get('/api/naps', app.api.naps.read);
 app.get('/api/naps/:id', app.api.naps.read);
 app.post('/api/naps', app.api.naps.create);
-app.post('/api/naps/:id/asset', app.api.naps.createAsset);
 app.put('/api/naps/:id', app.api.naps.update);
 app['delete']('/api/naps/:id', app.api.naps['delete']);
 
@@ -181,6 +180,8 @@ app['delete']('/api/naps/:id', app.api.naps['delete']);
 app.get('/api/spots', app.api.spots.read);
 app.get('/api/spots/:id', app.api.spots.read);
 app.post('/api/spots', app.api.spots.create);
+app.post('/api/spots/:id/asset', app.api.spots.createAsset);
+app.get('/api/spots/:id/asset/:assetId', app.api.spots.getAsset);
 app.put('/api/spots/:id', app.api.spots.update);
 app['delete']('/api/spots/:id', app.api.spots['delete']);
 
