@@ -20,6 +20,8 @@ function (Backbone, template, SearchBoxView, NavBoxView, PopupView, AddSpotView,
     el: '.content',
     template: template,
     model: new CurrentLocation(),
+    collection: new SpotsCollection(),
+    spotViews: {},
 
     initialize: function initialize (options) {
       this.app = options.app;
@@ -29,11 +31,12 @@ function (Backbone, template, SearchBoxView, NavBoxView, PopupView, AddSpotView,
 
     addListeners: function addListeners () {
       this.listenTo(this.model, 'change:latlng', this.onLocationFound);
+      this.listenTo(this.collection, 'add', this.addSpot);
+      this.listenTo(this.collection, 'remove', this.removeSpot);
       //this.listenTo(this.app.collections.people, 'reset', this.populateView);
     },
 
     render: function render () {
-      var self = this;
       this.map = L.map('map');
       L.tileLayer('http://{s}.tile.cloudmade.com/8ee2a50541944fb9bcedded5165f09d9/997/256/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
@@ -52,25 +55,34 @@ function (Backbone, template, SearchBoxView, NavBoxView, PopupView, AddSpotView,
       var navView = new NavBoxView();
       navView.render(this.map);
 
-      var collection = new SpotsCollection();
-      collection.fetch({
-        success: function(collection) {
-          collection.each(function(model) {
-            new PopupView({
-              point: new L.LatLng(model.get('location')[1], model.get('location')[0]),
-              currentLocation: self.model,
-              map: self.map,
-              model: model
-            });
-          });
-        }
-      });
+      this.collection.fetch();
 
       new AddSpotView({
-        map: this.map
+        map: this.map,
+        parent: this
       });
 
       return this;
+    },
+
+    removeSpot: function(model) {
+      var spot = this.spotViews[model.id];
+      if (spot) {
+        spot.dispose();
+        this.spotViews[model.id] = null;
+      }
+    },
+
+    addSpot: function(model) {
+      this.spotViews[model.id] = new PopupView({
+        point: new L.LatLng(model.get('location')[1], model.get('location')[0]),
+        currentLocation: this.model,
+        map: this.map,
+        model: model
+      });
+      if (this.model.get('latlng')) {
+        this.spotViews[model.id].render();
+      }
     },
 
     populateView: function populateView (collection) {

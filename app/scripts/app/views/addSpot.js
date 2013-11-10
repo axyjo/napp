@@ -15,6 +15,7 @@ function (Backbone, $, L, _, template, Spot) {
     initialize: function initialize (options) {
       options = options || {};
       this.map = options.map;
+      this.parent = options.parent;
       this.addListeners();
       this.createControl();
     },
@@ -78,6 +79,8 @@ function (Backbone, $, L, _, template, Spot) {
           });
           model.save(null, {
             success: function() {
+              self.parent.collection.add(model);
+              self.marker.off('popupclose');
               self.map.removeLayer(self.marker);
             }
           });

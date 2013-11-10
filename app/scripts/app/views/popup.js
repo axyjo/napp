@@ -19,7 +19,7 @@ function (Backbone, $, template, L) {
     },
 
     addListeners: function addListeners () {
-      this.currentLocation.on('change:latlng', this.render, this);
+      this.listenTo(this.currentLocation, 'change:latlng', this.render);
     },
 
     render: function render(options) {
@@ -33,6 +33,13 @@ function (Backbone, $, template, L) {
           .bindPopup(template(this.model.attributes));
 
       return this;
+    },
+
+    dispose: function() {
+      if (this.marker) {
+        this.map.removeLayer(this.marker);
+      }
+      this.remove();
     },
 
     /**
