@@ -7,12 +7,13 @@ define([
   'views/addSpot',
   'views/locationSnap',
   'models/currentLocation',
+  'collections/spots',
   'jquery',
   'leaflet',
   'underscore'
 ],
 
-function (Backbone, template, SearchBoxView, NavBoxView, PopupView, AddSpotView, LocationSnapView, CurrentLocation, $, L, _) {
+function (Backbone, template, SearchBoxView, NavBoxView, PopupView, AddSpotView, LocationSnapView, CurrentLocation, SpotsCollection, $, L, _) {
   'use strict';
 
   var AppView = Backbone.View.extend({
@@ -32,6 +33,7 @@ function (Backbone, template, SearchBoxView, NavBoxView, PopupView, AddSpotView,
     },
 
     render: function render () {
+      var self = this;
       this.map = L.map('map');
       L.tileLayer('http://{s}.tile.cloudmade.com/8ee2a50541944fb9bcedded5165f09d9/997/256/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
@@ -50,10 +52,18 @@ function (Backbone, template, SearchBoxView, NavBoxView, PopupView, AddSpotView,
       var navView = new NavBoxView();
       navView.render(this.map);
 
-      new PopupView({
-        point: new L.LatLng(43.467, -80.5400),
-        currentLocation: this.model,
-        map: this.map
+      var collection = new SpotsCollection();
+      collection.fetch({
+        success: function(collection) {
+          collection.each(function(model) {
+            new PopupView({
+              point: new L.LatLng(model.get('location')[1], model.get('location')[0]),
+              currentLocation: self.model,
+              map: self.map,
+              model: model
+            });
+          });
+        }
       });
 
       new AddSpotView({

@@ -14,6 +14,7 @@ function (Backbone, $, template, L) {
       this.point = options.point;
       this.currentLocation = options.currentLocation;
       this.map = options.map;
+      this.model = options.model || {};
       this.addListeners();
     },
 
@@ -27,8 +28,9 @@ function (Backbone, $, template, L) {
         this.map.removeLayer(this.marker);
       }
 
+      _.extend(this.model.attributes, {distance: this._calculateDistance()});
       this.marker = L.marker(this.point).addTo(this.map)
-          .bindPopup(template({distance: this._calculateDistance()}));
+          .bindPopup(template(this.model.attributes));
 
       return this;
     },
