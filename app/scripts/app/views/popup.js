@@ -2,11 +2,12 @@ define([
   'backbone',
   'jquery',
   'JST/popup',
+  'models/nap',
   'leaflet',
   'underscore'
 ],
 
-function (Backbone, $, template, L, _) {
+function (Backbone, $, template, Nap, L, _) {
   'use strict';
 
   var PopupView = Backbone.View.extend({
@@ -25,6 +26,7 @@ function (Backbone, $, template, L, _) {
 
     render: function render(options) {
       options = options || {};
+      var self = this;
       if (this.marker) {
         this.map.removeLayer(this.marker);
       }
@@ -33,8 +35,27 @@ function (Backbone, $, template, L, _) {
         distance: this._calculateDistance(),
         assetUrl: '/api/spots/' + this.model.id + '/asset/' + this.model.get('assets')[0]
       });
-      this.marker = L.marker(this.point).addTo(this.map)
-          .bindPopup(template(this.model.attributes));
+
+      var $tplContent = $(template(this.model.attributes));
+      this.marker = L.marker(this.point);
+
+      $tplContent.find('.btn-lg').on('click', function(e) {
+        var $el = $(e.target);
+        var model = new Nap();
+        model.set('location', self.model.id);
+        if ($el.hasClass('btn-danger')) {
+          model.set('rating', 0);
+        } else if ($el.hasClass('btn-success')) {
+          model.set('rating', 10);
+        }
+
+        if (model.get('rating') === 0 || model.get('rating')) {
+          model.save();
+          self.marker.closePopup();
+        }
+      });
+
+      this.marker.addTo(this.map).bindPopup($tplContent[0]);
 
       return this;
     },
