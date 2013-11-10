@@ -2,7 +2,7 @@ define([
   'backbone',
   'JST/app',
   'views/searchbox',
-  'views/navigation', 
+  'views/navigation',
   'jquery',
   'leaflet',
   'underscore'
@@ -60,12 +60,12 @@ function (Backbone, template, SearchBoxView, NavBoxView, $, L, _) {
     onLocationFound: function onLocationFound(e) {
       if (this.map) {
         console.log(e);
-        var radius = e.accuracy / 2;
+        var radius = Math.round(e.accuracy * 100 / 2)/100;
 
         L.marker(e.latlng).addTo(this.map)
             .bindPopup("You are within " + radius + " meters from this point").openPopup();
 
-        L.circle(e.latlng, radius).addTo(this.map);  
+        L.circle(e.latlng, radius).addTo(this.map);
       }
     },
 
