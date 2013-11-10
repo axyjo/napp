@@ -42,7 +42,7 @@ function (Backbone, template, SearchBoxView, NavBoxView, PopupView, AddSpotView,
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
         maxZoom: 18
       }).addTo(this.map);
-
+      this.map.on('moveend zoomend resize', this.fetch, this);
 
       this.locationSnap = new LocationSnapView({
         map: this.map,
@@ -55,14 +55,25 @@ function (Backbone, template, SearchBoxView, NavBoxView, PopupView, AddSpotView,
       var navView = new NavBoxView();
       navView.render(this.map);
 
-      this.collection.fetch();
-
       new AddSpotView({
         map: this.map,
         parent: this
       });
 
       return this;
+    },
+
+    fetch: function() {
+      if (this.map._loaded) {
+        var bounds = this.map.getBounds(),
+          params = {
+            bottomLeft: [bounds.getSouthWest().lng, bounds.getSouthWest().lat],
+            topRight: [bounds.getNorthEast().lng, bounds.getNorthEast().lat]
+          };
+        this.collection.fetch({
+          data: $.param(params)
+        });
+      }
     },
 
     removeSpot: function(model) {
