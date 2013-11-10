@@ -42,7 +42,7 @@ function (Backbone, $, L, _, template, Spot) {
               .addListener(controlDiv, 'click', L.DomEvent.preventDefault)
               .addListener(controlDiv, 'click', function () { self.clickHandler(); });
 
-            var controlUI = L.DomUtil.create('div', 'leaflet-control-command-addSpot', controlDiv);
+            var controlUI = L.DomUtil.create('div', 'fa leaflet-control-command-addSpot fa-location-arrow fa-2x', controlDiv);
             controlUI.title = 'Add Spot';
             controlUI.text = 'asdf';
             return controlDiv;

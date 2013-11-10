@@ -44,7 +44,7 @@ function (Backbone, $, L, _) {
               .addListener(controlDiv, 'click', L.DomEvent.preventDefault)
               .addListener(controlDiv, 'click', function () { self.resumeRefresh(); });
 
-            var controlUI = L.DomUtil.create('div', 'leaflet-control-command-snap', controlDiv);
+            var controlUI = L.DomUtil.create('div', 'fa leaflet-control-command-snap fa-refresh fa-2x', controlDiv);
             controlUI.title = 'Snap';
             return controlDiv;
           }

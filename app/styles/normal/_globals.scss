@@ -19,13 +19,8 @@ html, body, #map {
     margin-top: 0;
 }
 
-.leaflet-control-command-snap, .leaflet-control-command-addSpot
+.leaflet-control-command-snap
 {
-    background-image: url(https://dl.dropboxusercontent.com/u/8283278/CDN/Leaflet/images/command.png);
-    width: 20px;
-    height: 20px;
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
     display: block;
     padding: 3px;
     border-radius: 4px;
@@ -42,13 +37,11 @@ html, body, #map {
     background-color: #F4F4F4;
 }
 
-.leaflet-control-command-addSpot {
-    -webkit-transform: rotate(45deg);
-}
 
 .spotConfirm .form {
     display: none;
 }
+
 
 
 .spot-popup {
@@ -56,4 +49,15 @@ html, body, #map {
         max-width: 250px !important;
         max-height: 200px !important;
     }
+}
+
+.leaflet-control-command-addSpot{
+    padding: 3px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    box-shadow: 0 1px 7px rgba(0, 0, 0, 0.65);
+    cursor: auto;
+    text-align: center;
+    background-color: #FFFFFF;
 }
