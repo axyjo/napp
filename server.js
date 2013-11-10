@@ -180,8 +180,18 @@ app.get('/normal', function(req, res, next) {
   res.render('normal');
 });
 
-app.get('/api/naps', app.api.naps.getAll);
-app.get('/api/spots', app.api.spots.getAll);
+app.get('/api/naps', app.api.naps.read);
+app.get('/api/naps/:id', app.api.naps.read);
+app.post('/api/naps', app.api.naps.create);
+app.put('/api/naps/:id', app.api.naps.update);
+app['delete']('/api/naps/:id', app.api.naps['delete']);
+
+
+app.get('/api/spots', app.api.spots.read);
+app.get('/api/spots/:id', app.api.spots.read);
+app.post('/api/spots', app.api.spots.create);
+app.put('/api/spots/:id', app.api.spots.update);
+app['delete']('/api/spots/:id', app.api.spots['delete']);
 
 /*
  * Status Code pages

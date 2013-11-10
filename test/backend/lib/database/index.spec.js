@@ -2,7 +2,7 @@ var db = source('lib/database');
 
 describe('database tests', function () {
   describe('naps', function() {
-    it('should get data', function(done) {
+    xit('should get data', function(done) {
       expect(db).to.have.property('getNaps');
       db.getNaps.should.be.a('function');
 
@@ -18,7 +18,7 @@ describe('database tests', function () {
   });
 
   describe('spots', function() {
-    it('should get data', function(done) {
+    xit('should get data', function(done) {
       expect(db).to.have.property('getSpots');
       db.getSpots.should.be.a('function');
 
@@ -32,7 +32,7 @@ describe('database tests', function () {
       });
     });
 
-    it('should check the internal addSpot function', function () {
+    xit('should check the internal addSpot function', function () {
       var data = [];
 
       expect(db).to.have.property('addSpot');
