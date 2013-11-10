@@ -180,8 +180,8 @@ app.get('/normal', function(req, res, next) {
   res.render('normal');
 });
 
-app.get('/api/people', app.api.people.getAll);
-app.get('/api/peopleError', app.api.people.getError);
+app.get('/api/naps', app.api.naps.getAll);
+app.get('/api/spots', app.api.spots.getAll);
 
 /*
  * Status Code pages

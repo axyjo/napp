@@ -5,9 +5,9 @@ define([
 function (Backbone) {
   'use strict';
 
-  var Person = Backbone.Model.extend({
+  var Spot = Backbone.Model.extend({
 
   });
 
-  return Person;
+  return Spot;
 });
