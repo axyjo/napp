@@ -163,17 +163,7 @@ app.use(function(err, req, res, next) {
  * Routes
  */
 app.get('/', function(req, res, next) {
-  // we use a direct database connection here
-  // because the API would have sent JSON itself
-  app.db.getPeople(function (err, people) {
-    if (err) {
-      return next(err);
-    }
-
-    res.render('app', {
-      bootstrap: 'var bootstrap = ' + JSON.stringify(people) + ';',
-    });
-  });
+  res.render('app');
 });
 
 app.get('/normal', function(req, res, next) {

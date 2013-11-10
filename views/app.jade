@@ -22,8 +22,6 @@ block prepend main
 
 
 block append bottom-script
-  script!= bootstrap
-
   - if (dev)
     //- has.js is used to branch requirejs modules' returned values in a test environment like mocha.
         since the modules themselves contain has() tests, we need to include them in the dev environment.
