@@ -4,6 +4,7 @@ define([
   'views/searchbox',
   'views/navigation',
   'views/popup',
+  'views/addSpot',
   'views/locationSnap',
   'models/currentLocation',
   'jquery',
@@ -11,7 +12,7 @@ define([
   'underscore'
 ],
 
-function (Backbone, template, SearchBoxView, NavBoxView, PopupView, LocationSnapView, CurrentLocation, $, L, _) {
+function (Backbone, template, SearchBoxView, NavBoxView, PopupView, AddSpotView, LocationSnapView, CurrentLocation, $, L, _) {
   'use strict';
 
   var AppView = Backbone.View.extend({
@@ -52,6 +53,10 @@ function (Backbone, template, SearchBoxView, NavBoxView, PopupView, LocationSnap
       new PopupView({
         point: new L.LatLng(43.467, -80.5400),
         currentLocation: this.model,
+        map: this.map
+      });
+
+      new AddSpotView({
         map: this.map
       });
 

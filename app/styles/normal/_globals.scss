@@ -19,7 +19,7 @@ html, body, #map {
     margin-top: 0;
 }
 
-.leaflet-control-command-snap
+.leaflet-control-command-snap, .leaflet-control-command-addSpot
 {
     background-image: url(https://dl.dropboxusercontent.com/u/8283278/CDN/Leaflet/images/command.png);
     width: 20px;
@@ -40,4 +40,12 @@ html, body, #map {
 .leaflet-control-command-snap:hover
 {
     background-color: #F4F4F4;
+}
+
+.leaflet-control-command-addSpot {
+    -webkit-transform: rotate(45deg);
+}
+
+.spotConfirm .form {
+    display: none;
 }
